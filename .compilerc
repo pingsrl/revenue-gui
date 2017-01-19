@@ -4,6 +4,9 @@
       "application/javascript": {
         "presets": ["latest", "react"],
         "sourceMaps": "inline"
+      },
+      "text/less": {
+        "dumpLineNumbers": "comments"
       }
     },
     "production": {

@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import InvoicesStore from '../stores/invoices.js';
 import numeral from '../lib/numeral.js';
 import Table from '../components/table.jsx';
+import { shell } from 'electron';
 
 let columns = [
   {
     key: 'purchase_order',
     label: '#',
     transform: (el) => el.toUpperCase(),
+  },
+  {
+    key: 'id',
+    label: 'Link',
+    transform: (el) => <a href="#" onClick={(e) => {
+      e.preventDefault();
+      shell.openExternal('https://pingsrl.harvestapp.com/invoices/' + el);
+    }}>apri</a>,
   },
   {
     key: 'issued_at',
@@ -18,12 +27,27 @@ let columns = [
     label: 'Scadenza',
   },
   {
+    key: 'due_amount',
+    label: 'Status',
+    transform: (due_amount, invoice) => {
+      var paid = due_amount === 0;
+      var overdue = Date.parse(invoice.due_at) < (new Date).getTime();
+      if (paid) {
+        return <span className="status status-green" />;
+      } else if (overdue) {
+        return <span className="status status-red" />;
+      } else {
+        return <span className="status status-yellow" />;
+      }
+    },
+  },
+  {
     key: 'client_name',
     label: 'Cliente',
   },
   {
     key: 'amount',
-    label: 'Ammontare',
+    label: 'Totale',
     transform: (el) => '€ ' + numeral(el).format('€0,0.00'),
   },
   {
@@ -73,7 +97,16 @@ class Invoices extends Component {
 
     return (
       <div className="invoices">
-        {Object.keys(this.state.invoices).length > 0 ? tables.reverse() : <div>Dati in caricamento...</div>}
+        {Object.keys(this.state.invoices).length > 0 ?
+          <div>
+            <div className="legend">
+              <div>Pagata <span className="legend-item legend-green"/></div>
+              <div>Scaduta <span className="legend-item legend-red"/></div>
+              <div>Non-Scaduta <span className="legend-item legend-yellow"/></div>
+            </div>
+            {tables.reverse()}
+          </div> :
+          <div>Dati in caricamento...</div>}
       </div>
     );
   }

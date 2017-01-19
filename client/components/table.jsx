@@ -8,7 +8,7 @@ class Table extends Component {
           let key = col.key || col;
           let value = el[key];
           if (col.transform) {
-            value = col.transform(value);
+            value = col.transform(value, el);
           }
           return <td key={key} className={key}>{value}</td>;
         }

@@ -1,0 +1,70 @@
+@green: #32cd32;
+@yellow: #ffd700;
+@red: #f00;
+
+.invoices {
+    .legend {
+        .legend-item {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+        }
+        .legend-green {
+            background-color: @green;
+        }
+        .legend-yellow {
+            background-color: @yellow;
+        }
+        .legend-red {
+            background-color: @red;
+        }
+    }
+    .table-striped {
+        .purchase_order {
+            max-width: 100px;
+            min-width: 100px;
+        }
+        .client_name {
+            max-width: 300px;
+            min-width: 300px;
+        }
+        .amount {
+            text-align: right;
+        }
+        .due_amount {
+            .status {
+                display: block;
+                width: 20px;
+                height: 20px;
+                border-radius: 20px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .status-green {
+                background-color: @green;
+            }
+            .status-yellow {
+                background-color: @yellow;
+            }
+            .status-red {
+                background-color: @red;
+            }
+        }
+        .tax_amount {
+            text-align: right;
+        }
+        .subject {
+            max-width: 300px;
+            min-width: 300px;
+        }
+    }
+}
+
+.custom-tooltip {
+    margin: 0;
+    line-height: 24px;
+    border: 1px solid #f5f5f5;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+}
