@@ -27,6 +27,11 @@ let columns = [
     transform: (el) => numeral(el).format('€0,0.00'),
   },
   {
+    key: 'tax_amount',
+    label: 'Tasse',
+    transform: (el) => numeral(el).format('€0,0.00'),
+  },
+  {
     key: 'subject',
     label: 'Soggetto',
   },
