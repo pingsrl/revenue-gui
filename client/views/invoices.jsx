@@ -55,27 +55,20 @@ class Invoices extends Component {
   }
 
   render() {
-    let years = {};
-
-    this.state.invoices.forEach((el) => {
-      let key = el.issued_at.slice(0, 4);
-      years[key] = years[key] || [];
-      years[key].push(el);
-    });
 
     let tables = [];
-    for (let y in years) {
+    for (let y in this.state.invoices) {
       tables.push(
         <div key={y}>
           <h2>{y}</h2>
-          <Table data={years[y]} columns={columns} />
+          <Table data={this.state.invoices[y]} columns={columns} />
         </div>
       );
     }
 
     return (
       <div className="invoices">
-        {this.state.invoices.length > 0 ?  tables.reverse() : <div>Dati in caricamento...</div>}
+        {Object.keys(this.state.invoices).length > 0 ?  tables.reverse() : <div>Dati in caricamento...</div>}
       </div>
     );
   }

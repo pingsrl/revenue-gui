@@ -5,10 +5,7 @@ let Header = () => {
   return (
     <Toolbar>
       <Actionbar>
-        <ButtonGroup>
-          <Button glyph="home" />
-          <Button glyph="github" />
-        </ButtonGroup>
+
       </Actionbar>
     </Toolbar>
   );
