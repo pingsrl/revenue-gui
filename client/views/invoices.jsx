@@ -24,12 +24,12 @@ let columns = [
   {
     key: 'amount',
     label: 'Ammontare',
-    transform: (el) => numeral(el).format('€0,0.00'),
+    transform: (el) => '€ ' + numeral(el).format('€0,0.00'),
   },
   {
     key: 'tax_amount',
     label: 'Tasse',
-    transform: (el) => numeral(el).format('€0,0.00'),
+    transform: (el) => '€ ' + numeral(el).format('€0,0.00'),
   },
   {
     key: 'subject',
@@ -73,7 +73,7 @@ class Invoices extends Component {
 
     return (
       <div className="invoices">
-        {Object.keys(this.state.invoices).length > 0 ?  tables.reverse() : <div>Dati in caricamento...</div>}
+        {Object.keys(this.state.invoices).length > 0 ? tables.reverse() : <div>Dati in caricamento...</div>}
       </div>
     );
   }

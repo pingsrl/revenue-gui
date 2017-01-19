@@ -5,32 +5,63 @@
   "description": "",
   "main": "server/main.js",
   "scripts": {
-    "start": "./node_modules/.bin/electron .",
-    "build": "./node_modules/.bin/electron-packager ."
+    "start": "electron-forge start",
+    "build": "./node_modules/.bin/electron-packager .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "debug": "^2.6.0",
+    "electron-compile": "^5.1.2",
     "flux": "^3.1.2",
     "lodash": "^4.17.4",
     "numeral": "^2.0.4",
     "react": "^15.4.2",
     "react-d3": "^0.4.0",
     "react-dom": "^15.4.2",
-    "react-photonkit": "https://github.com/react-photonkit/react-photonkit#master",
+    "react-photonkit": "^0.4.1",
     "react-router": "^3.0.2",
     "recharts": "^0.20.5",
-    "revenue-core": "^1.0.2"
+    "revenue-core": "^1.0.3"
   },
   "devDependencies": {
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.5.0",
     "del": "^2.2.2",
-    "electron-prebuilt-compile": "^1.4.14",
+    "electron-prebuilt-compile": "1.4.14",
     "merge2": "^1.0.3",
     "optimist": "^0.6.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {},
+      "electronWinstallerConfig": {
+        "name": ""
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": ""
+      },
+      "windowsStoreConfig": {
+        "packageName": ""
+      }
+    }
   }
 }
