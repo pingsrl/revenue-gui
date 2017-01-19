@@ -12,8 +12,9 @@ class Sidebar extends React.Component {
     return (
       <Pane ptSize="sm" sidebar>
         <NavGroup activeKey={1} onSelect={this.onSelect}>
-          <NavGroupItem eventKey="/" text="Dashboard" />
-          <NavGroupItem eventKey="/invoices" text="Fatture" />
+          <NavGroupItem eventKey="/" text="Dashboard" glyph="home" />
+          <NavGroupItem eventKey="/invoices" text="Fatture" glyph="docs" />
+          <NavGroupItem eventKey="/clients" text="Clienti" glyph="users" />
         </NavGroup>
       </Pane>
     );
