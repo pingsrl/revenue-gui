@@ -2947,9 +2947,9 @@ restler@~3.2.2:
     xml2js "0.4.0"
     yaml "0.2.3"
 
-revenue-core@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/revenue-core/-/revenue-core-1.0.3.tgz#269e2d2837880d961fe98fde4ab9b7ff08e20e9d"
+revenue-core@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/revenue-core/-/revenue-core-1.0.4.tgz#e7f8683e275d8b64ef5d206b69a85dc5a9ed3a2f"
   dependencies:
     async "^2.1.4"
     debug "^2.2.0"

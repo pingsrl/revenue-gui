@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import InvoicesStore from '../stores/invoices.js';
-import numeral from '../lib/numeral.js';
-import Table from '../components/table.jsx';
 import { shell } from 'electron';
+
+import InvoicesStore from '../stores/invoices.js';
+
+import numeral from '../lib/numeral.js';
+
+import Table from '../components/table.jsx';
+import Loader from '../components/loader.jsx';
 
 let columns = [
   {
@@ -52,7 +56,7 @@ let columns = [
   },
   {
     key: 'tax_amount',
-    label: 'Tasse',
+    label: 'IVA',
     transform: (el) => '€ ' + numeral(el).format('€0,0.00'),
   },
   {
@@ -95,20 +99,23 @@ class Invoices extends Component {
       );
     }
 
-    return (
-      <div className="invoices">
-        {Object.keys(this.state.invoices).length > 0 ?
+    if (Object.keys(this.state.invoices).length > 0) {
+      return (
+        <div className="invoices">
           <div>
             <div className="legend">
-              <div>Pagata <span className="legend-item legend-green"/></div>
-              <div>Scaduta <span className="legend-item legend-red"/></div>
-              <div>Non-Scaduta <span className="legend-item legend-yellow"/></div>
+              <div>Pagata <span className="legend-item legend-green" /></div>
+              <div>Scaduta <span className="legend-item legend-red" /></div>
+              <div>Non-Scaduta <span className="legend-item legend-yellow" /></div>
             </div>
             {tables.reverse()}
-          </div> :
-          <div>Dati in caricamento...</div>}
-      </div>
-    );
+          </div>
+        </div>
+      );
+    }
+    return (<div className="invoices">
+      <Loader/>
+    </div>);
   }
 }
 

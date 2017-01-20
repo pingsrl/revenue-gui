@@ -12,11 +12,40 @@ import {
 } from 'Recharts';
 import { ButtonGroup, Button } from 'react-photonkit';
 
+import numeral from '../lib/numeral.js';
+import months from '../lib/months.js';
+
 import InvoicesStore from '../stores/invoices.js';
 import PaymentsStore from '../stores/payments.js';
 
 import CustomToolTip from '../components/tooltip.jsx';
-import numeral from '../lib/numeral.js';
+import Table from '../components/table.jsx';
+import Loader from '../components/loader.jsx';
+
+
+let columns = [
+  {
+    key: 'label',
+    label: 'Mese',
+    transform: (el) => months[parseInt(el, 10) - 1]
+  },
+  {
+    key: 'invoiced',
+    label: 'Fatturato',
+    transform: (el) => '€' + numeral(el).format('0,0.00')
+  },
+  {
+    key: 'paid',
+    label: 'Incassato',
+    transform: (el) => '€' + numeral(el).format('0,0.00')
+  },
+  {
+    key: 'vat_paid',
+    label: 'IVA Incassato',
+    transform: (el, month) => '€' + numeral(month.paid * 0.22).format('0,0.00')
+  },
+];
+
 
 class Dashboard extends Component {
   constructor() {
@@ -77,13 +106,9 @@ class Dashboard extends Component {
 
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].forEach((m, idx) => {
       // sommo le fatture
-      var invoiced = !invoiceGroups[m] ? 0 : Math.round(invoiceGroups[m].reduce((a, b) => {
-        return (a.amount - a.tax_amount || a) + b.amount - b.tax_amount;
-      }));
+      var invoiced = !invoiceGroups[m] ? 0 : invoiceGroups[m].map(a => a.amount - a.tax_amount).reduce((a, b) => a + b);
       // sommo i pagamenti
-      var paid = !paymentGroups[m] ? 0 : Math.round(paymentGroups[m].reduce((a, b) => {
-        return (a.amount || a) + b.amount;
-      }));
+      var paid = !paymentGroups[m] ? 0 : paymentGroups[m].map(a => a.amount).reduce((a, b) => a + b);
 
       var oldData = this.getBarData(year - 1);
       var invoiced_last_year = 0;
@@ -111,36 +136,38 @@ class Dashboard extends Component {
 
   render() {
     var data = this.getBarData();
+
     if (Object.keys(this.state.invoices).length > 0 && Object.keys(this.state.payments).length > 0) {
-      var invoiced = data.reduce((a, b) => (a.invoiced || a) + b.invoiced);
-      var invoiced_last_year = data.reduce((a, b) => (a.invoiced_last_year || a) + b.invoiced_last_year);
+      var invoiced = data.map(a => a.invoiced).reduce((a, b) => a + b);
+      var invoiced_last_year = data.map(a => a.invoiced_last_year).reduce((a, b) => a + b);
       var diff = this.calcPercentage(invoiced_last_year, invoiced);
+
+      return <div className="dashboard"><div style={{ textAlign: 'center' }}>
+        <ButtonGroup>
+          {Object.keys(this.state.invoices).map((el) =>
+            <Button key={el} text={el} onClick={this.setYear.bind(this, el)}></Button>
+          )}
+        </ButtonGroup>
+        <h4>Fatturato {this.state.year}: € {numeral(invoiced).format('0,0.00')} <span className={diff > 0 ? 'positive' : 'negative'} >{diff > 0 && '+'}{numeral(diff).format('0,0.00')}%</span>
+        </h4>
+        <ComposedChart width={1000} height={500} data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="label" />
+          <YAxis />
+          <Tooltip content={<CustomToolTip />} />
+          <Bar dataKey='invoiced' fill='#60beeb' />
+          <Bar dataKey='paid' fill='#8cc759' />
+          <Legend />
+          <Line type='monotone' dataKey='invoiced_last_year' stroke='#ef5d74' />
+        </ComposedChart>
+        <Table data={data} columns={columns} />
+      </div>
+      </div>;
     }
 
     return (
-      <div>
-        {Object.keys(this.state.invoices).length > 0 && Object.keys(this.state.payments).length > 0 ?
-          <div style={{ textAlign: 'center' }}>
-            <ButtonGroup>
-              {Object.keys(this.state.invoices).map((el) =>
-                <Button key={el} text={el} onClick={this.setYear.bind(this, el)}></Button>
-              )}
-            </ButtonGroup>
-            <h3>{this.state.year}</h3>
-            <h4>Fatturato: € {numeral(invoiced).format('0,0.00')} {diff > 0 && '+'}{numeral(diff).format('0,0.00')}%</h4>
-            <ComposedChart width={1000} height={500} data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" />
-              <YAxis />
-              <Tooltip content={<CustomToolTip />} />
-              <Bar dataKey='invoiced' fill='#008fff' />
-              <Bar dataKey='paid' fill='#32cd32' />
-              <Legend />
-              <Line type='monotone' dataKey='invoiced_last_year' stroke='#f00' />
-            </ComposedChart>
-          </div> :
-          <div>Dati in caricamento...</div>}
-
+      <div className="dashboard">
+        <Loader/>
       </div>
     );
   }

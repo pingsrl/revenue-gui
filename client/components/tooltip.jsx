@@ -6,7 +6,7 @@ class Tooltip extends Component {
   calcPercentage(y1 = 0, y2 = 0) {
     var perc = ((y2 - y1) / y1) * 100;
     var str = numeral(perc).format('0.00');
-    return perc > 0 ? '+' + str : str;
+    return <span className={perc > 0 ? 'positive' : 'negative'}>{perc > 0 ? '+' + str : str}%</span>;
   }
 
   render() {
@@ -23,7 +23,7 @@ class Tooltip extends Component {
               € {numeral(payload[0].value).format('€0,0.00')}
             </span>
             <span className="percentage">
-              {this.calcPercentage(payload[2].value, payload[0].value)}%
+              {this.calcPercentage(payload[2].value, payload[0].value)}
             </span>
           </p>
           <p className="label">
