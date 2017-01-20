@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { shell } from 'electron';
+import { Input } from 'react-photonkit';
 
 import InvoicesStore from '../stores/invoices.js';
 
@@ -69,7 +70,8 @@ class Invoices extends Component {
   constructor() {
     super();
     this.state = {
-      invoices: InvoicesStore.data
+      invoices: InvoicesStore.data,
+      search: '',
     };
 
     this.parseInvoices = this.parseInvoices.bind(this);
@@ -89,17 +91,17 @@ class Invoices extends Component {
 
   render() {
 
-    let tables = [];
-    for (let y in this.state.invoices) {
-      tables.push(
-        <div key={y}>
-          <h2>{y}</h2>
-          <Table data={this.state.invoices[y]} columns={columns} />
-        </div>
-      );
-    }
 
     if (Object.keys(this.state.invoices).length > 0) {
+      let tables = [];
+      for (let y in this.state.invoices) {
+        tables.push(
+          <div key={y}>
+            <h2>{y}</h2>
+            <Table data={this.state.invoices[y]} columns={columns} search={this.state.search || ''} />
+          </div>
+        );
+      }
       return (
         <div className="invoices">
           <div>
@@ -108,13 +110,20 @@ class Invoices extends Component {
               <div>Scaduta <span className="legend-item legend-red" /></div>
               <div>Non-Scaduta <span className="legend-item legend-yellow" /></div>
             </div>
+            <div>
+              <Input
+                placeholder="Cerca"
+                onChange={() => this.setState({ search: this.search.getValue() })}
+                ref={input => this.search = input}
+              />
+            </div>
             {tables.reverse()}
           </div>
         </div>
       );
     }
     return (<div className="invoices">
-      <Loader/>
+      <Loader />
     </div>);
   }
 }
