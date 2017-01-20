@@ -30,6 +30,7 @@
     "babel-preset-react": "^6.22.0",
     "del": "^2.2.2",
     "electron-prebuilt-compile": "1.4.15",
+    "electron-react-devtools": "^0.4.0",
     "merge2": "^1.0.3",
     "optimist": "^0.6.1",
     "vinyl-buffer": "^1.0.0",
