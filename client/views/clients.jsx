@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { Input } from 'react-photonkit';
 
 import InvoicesStore from '../stores/invoices.js';
 import PaymentsStore from '../stores/payments.js';
@@ -55,6 +56,7 @@ class Clients extends Component {
       invoices: {},
       payments: {},
       year: (new Date).getFullYear(),
+      search: '',
     };
 
     this.parseInvoices = this.parseInvoices.bind(this);
@@ -117,7 +119,7 @@ class Clients extends Component {
             .reduce((a, b) => a + b);
 
           row.due = invoices[client][y]
-            .map(a => a.due_amount )
+            .map(a => a.due_amount)
             .reduce((a, b) => a + b);
 
           row.total += row[y];
@@ -130,14 +132,22 @@ class Clients extends Component {
 
       return (
         <div className="clients">
+          <div style={{ float: 'right' }}>
+            Cerca:
+              <Input
+              placeholder="Cerca"
+              onChange={() => this.setState({ search: this.search.getValue() })}
+              ref={input => this.search = input}
+            />
+          </div>
           <h3>Performance Clienti</h3>
-          <Table data={data} columns={columns} />
+          <Table data={data} columns={columns} search={this.state.search || ''}/>
         </div>
       );
     }
 
     return (<div className="clients">
-      <Loader/>
+      <Loader />
     </div>);
   }
 }

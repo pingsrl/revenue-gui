@@ -26,11 +26,12 @@ class Table extends Component {
   elementParser() {
     let data = this.state.data;
 
-    if (this.state.search.length > 2) {
+    if (this.state.search.length > 1) {
       data = data.filter((el) => {
         for (let i = 0; i < this.props.columns.length; i++) {
           let column = this.props.columns[i];
-          if (el[column.key].indexOf && el[column.key].toLowerCase().indexOf(this.state.search) > -1) {
+          let key = column.key + '';
+          if (el[key] && el[key].indexOf && el[key].toLowerCase().indexOf(this.state.search) > -1) {
             return true;
           }
         }

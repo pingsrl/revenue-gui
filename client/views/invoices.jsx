@@ -105,17 +105,18 @@ class Invoices extends Component {
       return (
         <div className="invoices">
           <div>
-            <div className="legend">
-              <div>Pagata <span className="legend-item legend-green" /></div>
-              <div>Scaduta <span className="legend-item legend-red" /></div>
-              <div>Non-Scaduta <span className="legend-item legend-yellow" /></div>
-            </div>
-            <div>
+            <div style={{ float: 'right' }}>
+              Cerca:
               <Input
                 placeholder="Cerca"
                 onChange={() => this.setState({ search: this.search.getValue() })}
                 ref={input => this.search = input}
               />
+            </div>
+            <div className="legend">
+              <div>Pagata <span className="legend-item legend-green" /></div>
+              <div>Scaduta <span className="legend-item legend-red" /></div>
+              <div>Non-Scaduta <span className="legend-item legend-yellow" /></div>
             </div>
             {tables.reverse()}
           </div>
