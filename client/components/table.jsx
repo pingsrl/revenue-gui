@@ -24,7 +24,7 @@ class Table extends Component {
   }
 
   elementParser() {
-    let data = this.state.data;
+    let data = this.getData();
 
     if (this.state.search.length > 1) {
       data = data.filter((el) => {
@@ -56,16 +56,27 @@ class Table extends Component {
 
   orderBy(key) {
     this.setState({
-      data: this.state.data.sort((a, b) => {
-        if (a[key] < b[key]) return -1 * this.state.order.direction;
-        if (a[key] > b[key]) return 1 * this.state.order.direction;
-        return 0;
-      }),
       order: {
         key,
-        direction: this.state.order.key === key ? this.state.order.direction * -1 : -1,
+        direction: this.state.order.key === key ? this.state.order.direction * -1 : 1,
       },
     });
+  }
+
+  getData() {
+    let key = this.state.order.key;
+    if (key.length) {
+      return this.state.data.sort((a, b) => {
+        let va = a[key] || 0;
+        let vb = b[key] || 0;
+        if (va.toLowerCase) { va = va.toLowerCase(); }
+        if (vb.toLowerCase) { vb = vb.toLowerCase(); }
+        if (va < vb) { return -1 * this.state.order.direction; }
+        if (va > vb) { return 1 * this.state.order.direction; }
+        return 0;
+      });
+    }
+    return this.state.data;
   }
 
   render() {
