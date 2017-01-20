@@ -64,7 +64,7 @@ class Table extends Component {
   }
 
   getData() {
-    let key = this.state.order.key;
+    let key = this.state.order.key + '';
     if (key.length) {
       return this.state.data.sort((a, b) => {
         let va = a[key] || 0;
