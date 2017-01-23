@@ -1344,6 +1344,10 @@ electron-prebuilt-compile@1.4.15:
     electron-compile "*"
     electron-compilers "*"
 
+electron-react-devtools@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/electron-react-devtools/-/electron-react-devtools-0.4.0.tgz#06bd04d8e232b20703d059f5560a6f2a838bc163"
+
 electron@1.4.15:
   version "1.4.15"
   resolved "https://registry.yarnpkg.com/electron/-/electron-1.4.15.tgz#eaccafe3f55ade02a746b706ac14b43db6c7ccf8"
@@ -2679,7 +2683,7 @@ rc@^1.1.2:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-"react-addons-transition-group@^0.14.0 || ^15.0.0":
+"react-addons-transition-group@^0.14.0 || ^15.0.0", react-addons-transition-group@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-addons-transition-group/-/react-addons-transition-group-15.4.2.tgz#4c42fa1c2ce024acab2924316c0f11268ded1af3"
   dependencies:
@@ -2701,9 +2705,9 @@ react-dom@^15.4.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-"react-photonkit@https://github.com/react-photonkit/react-photonkit#master":
+"react-photonkit@git+https://github.com/react-photonkit/react-photonkit.git#master":
   version "0.4.2"
-  resolved "https://github.com/react-photonkit/react-photonkit#ed3e4257aba084243f6dc4ce81e8bc5003df7199"
+  resolved "git+https://github.com/react-photonkit/react-photonkit.git#ed3e4257aba084243f6dc4ce81e8bc5003df7199"
   dependencies:
     classnames "^2.2.5"
     sortablejs "^1.4.2"
