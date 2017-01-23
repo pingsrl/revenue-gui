@@ -11,8 +11,8 @@ class Sidebar extends React.Component {
   render() {
     return (
       <Pane ptSize="sm" sidebar>
-        <NavGroup activeKey={1} onSelect={this.onSelect}>
-          <NavGroupItem eventKey="/" text="Dashboard" glyph="home" />
+        <NavGroup activeKey="/" onSelect={this.onSelect}>
+          <NavGroupItem eventKey="/" text="Dashboard" glyph="home"/>
           <NavGroupItem eventKey="/invoices" text="Fatture" glyph="docs" />
           <NavGroupItem eventKey="/clients" text="Clienti" glyph="users" />
         </NavGroup>
