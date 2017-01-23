@@ -19,7 +19,7 @@ class Table extends Component {
         key: '',
         direction: 1,
       },
-      search: nextProps.search.trim().toLowerCase(),
+      search: nextProps.search ? nextProps.search.trim().toLowerCase() : '',
     });
   }
 
