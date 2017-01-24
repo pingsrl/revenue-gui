@@ -27,15 +27,19 @@
     "revenue-core": "^1.0.4"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
     "babel-preset-latest": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "del": "^2.2.2",
     "electron-prebuilt-compile": "1.4.15",
     "electron-react-devtools": "^0.4.0",
+    "eslint": "^3.14.0",
+    "eslint-plugin-react": "^6.9.0",
     "merge2": "^1.0.3",
     "optimist": "^0.6.1",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "xo": "^0.17.1"
   },
   "config": {
     "forge": {
