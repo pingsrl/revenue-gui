@@ -6,9 +6,6 @@ import Dashboard from './views/dashboard.jsx';
 import Invoices from './views/invoices.jsx';
 import Clients from './views/clients.jsx';
 
-import { install } from 'electron-react-devtools';
-install();
-
 render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
