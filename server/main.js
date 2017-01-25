@@ -23,4 +23,9 @@ app.on('ready', () => {
   ipcMain.on('payments-store-ready', (event, args) => {
     getData('payments').then((payments) => event.sender.send('payments-data', payments));
   });
+
+  setInterval(() => {
+    getData('invoices').then((invoices) => event.sender.send('invoices-data', invoices));
+    getData('payments').then((payments) => event.sender.send('payments-data', payments));
+  },1000 * 60 * 2);
 });

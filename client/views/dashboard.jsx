@@ -138,8 +138,20 @@ class Dashboard extends Component {
     var data = this.getBarData();
 
     if (Object.keys(this.state.invoices).length > 0 && Object.keys(this.state.payments).length > 0) {
-      var invoiced = data.map(a => a.invoiced).reduce((a, b) => a + b);
-      var invoiced_last_year = data.map(a => a.invoiced_last_year).reduce((a, b) => a + b);
+      var invoiced = data
+        .map(a => a.invoiced)
+        .reduce((a, b) => a + b);
+
+      var invoiced_last_year = data
+        .filter(el => {
+          if (this.state.year == (new Date).getFullYear()) {
+            return parseInt(el.label, 10) <= ((new Date).getMonth() + 1);
+          }
+          return true;
+        })
+        .map(a => a.invoiced_last_year)
+        .reduce((a, b) => a + b);
+
       var diff = this.calcPercentage(invoiced_last_year, invoiced);
 
       return <div className="dashboard"><div style={{ textAlign: 'center' }}>
@@ -167,7 +179,7 @@ class Dashboard extends Component {
 
     return (
       <div className="dashboard">
-        <Loader/>
+        <Loader />
       </div>
     );
   }
