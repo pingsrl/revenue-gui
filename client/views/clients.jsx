@@ -118,7 +118,7 @@ class Clients extends Component {
             .map(a => a.amount - a.tax_amount)
             .reduce((a, b) => a + b);
 
-          row.due = invoices[client][y]
+          row.due += invoices[client][y]
             .map(a => a.due_amount)
             .reduce((a, b) => a + b);
 
