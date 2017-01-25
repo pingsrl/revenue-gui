@@ -27,5 +27,5 @@ app.on('ready', () => {
   setInterval(() => {
     getData('invoices').then((invoices) => event.sender.send('invoices-data', invoices));
     getData('payments').then((payments) => event.sender.send('payments-data', payments));
-  },1000 * 60 * 2);
+  }, 1000 * 60 * 60 * 2);
 });
