@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import numeral from '../lib/numeral.js';
-import months from '../lib/months.js';
+import months from '../lib/months.json';
 
 class Tooltip extends Component {
 	calcPercentage(y1 = 0, y2 = 0) {

@@ -8,7 +8,7 @@ function createWindow() {
 		width: 1500,
 		height: 1000
 	});
-	win.loadFile('./static/index.html');
+	win.loadFile('static/index.html');
 
 	// Apre il Pannello degli Strumenti di Sviluppo.
 	win.webContents.openDevTools();

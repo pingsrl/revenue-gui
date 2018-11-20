@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router';
 import { Window, Content, PaneGroup, Pane } from 'react-photonkit';
+import Dashboard from '../views/dashboard.jsx';
+import Invoices from '../views/invoices.jsx';
+import Clients from '../views/clients.jsx';
 
 import Header from './header.jsx';
 import Footer from './footer.jsx';
@@ -14,7 +18,11 @@ class App extends Component {
 					<PaneGroup>
 						<Sidebar />
 						<Pane className="padded-more">
-							{this.props.children}
+							<Switch>
+								<Route exact path="/" component={Dashboard} />
+								<Route path="/invoices" component={Invoices} />
+								<Route path="/clients" component={Clients} />
+							</Switch>
 						</Pane>
 					</PaneGroup>
 				</Content>

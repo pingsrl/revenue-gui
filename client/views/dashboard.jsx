@@ -13,7 +13,7 @@ import {
 import { ButtonGroup, Button } from 'react-photonkit';
 
 import numeral from '../lib/numeral.js';
-import months from '../lib/months.js';
+import months from '../lib/months.json';
 
 import InvoicesStore from '../stores/invoices.js';
 import PaymentsStore from '../stores/payments.js';
