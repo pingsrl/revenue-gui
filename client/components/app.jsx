@@ -6,22 +6,22 @@ import Footer from './footer.jsx';
 import Sidebar from './sidebar.jsx';
 
 class App extends Component {
-  render() {
-    return (
-      <Window>
-        <Header />
-        <Content>
-          <PaneGroup>
-            <Sidebar />
-            <Pane className="padded-more">
-              {this.props.children}
-            </Pane>
-          </PaneGroup>
-        </Content>
-        <Footer />
-      </Window>
-    );
-  }
+	render() {
+		return (
+			<Window>
+				<Header />
+				<Content>
+					<PaneGroup>
+						<Sidebar />
+						<Pane className="padded-more">
+							{this.props.children}
+						</Pane>
+					</PaneGroup>
+				</Content>
+				<Footer />
+			</Window>
+		);
+	}
 }
 
 export default App;
