@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import numeral from '../lib/numeral.js';
 import months from '../lib/months.json';
 
-class Tooltip extends Component {
+export default class Tooltip extends Component {
 	calcPercentage(y1 = 0, y2 = 0) {
 		var perc = ((y2 - y1) / y1) * 100;
-		var str = numeral(perc).format('0.00');
+		var str = ''; //numeral(perc).format('0.00');
 		return (
 			<span className={perc > 0 ? 'positive' : 'negative'}>
 				{perc > 0 ? '+' + str : str}%
@@ -24,7 +24,7 @@ class Tooltip extends Component {
 					<p className="label">
 						<span className="name">Fatturato:</span>
 						<span className="number">
-							€ {numeral(payload[0].value).format('€0,0.00')}
+							€ {/*numeral(payload[0].value).format('€0,0.00')*/}
 						</span>
 						<span className="percentage">
 							{this.calcPercentage(
@@ -36,7 +36,7 @@ class Tooltip extends Component {
 					<p className="label">
 						<span className="name">Incassato:</span>
 						<span className="number">
-							€ {numeral(payload[1].value).format('€0,0.00')}
+							€ {/*numeral(payload[1].value).format('€0,0.00')*/}
 						</span>
 						<span className="percentage"> </span>
 					</p>
@@ -47,5 +47,3 @@ class Tooltip extends Component {
 		return null;
 	}
 }
-
-export default Tooltip;

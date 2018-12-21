@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { shell } from 'electron';
-import { Input } from 'react-photonkit';
 
 import InvoicesStore from '../stores/invoices.js';
 
@@ -75,7 +74,7 @@ let columns = [
 	}
 ];
 
-class Invoices extends Component {
+export default class Invoices extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -118,7 +117,7 @@ class Invoices extends Component {
 					<div>
 						<div style={{ float: 'right' }}>
 							Cerca:
-							<Input
+							<input
 								placeholder="Cerca"
 								onChange={() =>
 									this.setState({
@@ -154,5 +153,3 @@ class Invoices extends Component {
 		);
 	}
 }
-
-export default Invoices;

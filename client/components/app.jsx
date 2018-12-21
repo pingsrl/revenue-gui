@@ -1,33 +1,33 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
-import { Window, Content, PaneGroup, Pane } from 'react-photonkit';
-import Dashboard from '../views/dashboard.jsx';
-import Invoices from '../views/invoices.jsx';
-import Clients from '../views/clients.jsx';
+import Dashboard from '../views/dashboard';
+import Invoices from '../views/invoices';
+import Clients from '../views/clients';
 
-import Header from './header.jsx';
-import Footer from './footer.jsx';
-import Sidebar from './sidebar.jsx';
+import Sidebar from './sidebar';
 
 class App extends Component {
 	render() {
 		return (
-			<Window>
-				<Header />
-				<Content>
-					<PaneGroup>
-						<Sidebar />
-						<Pane className="padded-more">
+			<ph-window>
+				<tool-bar>Revenue</tool-bar>
+				<window-content>
+					<div class="pane-group">
+						<div class="pane-sm sidebar">
+							<Sidebar />
+						</div>
+
+						<div class="pane">
 							<Switch>
 								<Route exact path="/" component={Dashboard} />
 								<Route path="/invoices" component={Invoices} />
 								<Route path="/clients" component={Clients} />
 							</Switch>
-						</Pane>
-					</PaneGroup>
-				</Content>
-				<Footer />
-			</Window>
+						</div>
+					</div>
+				</window-content>
+				<tool-bar />
+			</ph-window>
 		);
 	}
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Table extends Component {
+export default class Table extends Component {
 	constructor(props) {
 		super();
 		this.state = {
@@ -129,5 +129,3 @@ class Table extends Component {
 		);
 	}
 }
-
-export default Table;

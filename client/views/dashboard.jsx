@@ -10,7 +10,6 @@ import {
 	Legend,
 	CartesianGrid
 } from 'Recharts';
-import { ButtonGroup, Button } from 'react-photonkit';
 
 import numeral from '../lib/numeral.js';
 import months from '../lib/months.json';
@@ -31,22 +30,21 @@ let columns = [
 	{
 		key: 'invoiced',
 		label: 'Fatturato',
-		transform: el => '€' + numeral(el).format('0,0.00')
+		transform: el => '€' // + numeral(el).format('0,0.00')
 	},
 	{
 		key: 'paid',
 		label: 'Incassato',
-		transform: el => '€' + numeral(el).format('0,0.00')
+		transform: el => '€' //+ numeral(el).format('0,0.00')
 	},
 	{
 		key: 'vat_paid',
 		label: 'IVA Incassato',
-		transform: (el, month) =>
-			'€' + numeral(month.paid * 0.22).format('0,0.00')
+		transform: (el, month) => '€' //+ numeral(month.paid * 0.22).format('0,0.00')
 	}
 ];
 
-class Dashboard extends Component {
+export default class Dashboard extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -178,23 +176,24 @@ class Dashboard extends Component {
 			return (
 				<div className="dashboard">
 					<div style={{ textAlign: 'center' }}>
-						<ButtonGroup>
+						<btn-group>
 							{Object.keys(this.state.invoices).map(el => (
-								<Button
+								<button
 									key={el}
 									text={el}
+									className="btn btn-segment"
 									onClick={this.setYear.bind(this, el)}
 								/>
 							))}
-						</ButtonGroup>
+						</btn-group>
 						<h4>
 							Fatturato {this.state.year}: €{' '}
-							{numeral(invoiced).format('0,0.00')}{' '}
+							{/*numeral(invoiced).format('0,0.00')*/}{' '}
 							<span
 								className={diff > 0 ? 'positive' : 'negative'}
 							>
 								{diff > 0 && '+'}
-								{numeral(diff).format('0,0.00')}%
+								{/*numeral(diff).format('0,0.00')*/}%
 							</span>
 						</h4>
 						<ComposedChart width={1000} height={500} data={data}>
@@ -224,5 +223,3 @@ class Dashboard extends Component {
 		);
 	}
 }
-
-export default Dashboard;

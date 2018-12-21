@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Input } from 'react-photonkit';
 
 import InvoicesStore from '../stores/invoices.js';
 import PaymentsStore from '../stores/payments.js';
@@ -10,7 +9,7 @@ import numeral from '../lib/numeral.js';
 import Table from '../components/table.jsx';
 import Loader from '../components/loader.jsx';
 
-let transform = el => <span>€ {numeral(el).format('€0,0.00')} </span>;
+let transform = el => <span>€ {/*numeral(el).format('€0,0.00')*/} </span>;
 
 let columns = [
 	{
@@ -49,7 +48,7 @@ let columns = [
 	}
 ];
 
-class Clients extends Component {
+export default class Clients extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -135,7 +134,7 @@ class Clients extends Component {
 				<div className="clients">
 					<div style={{ float: 'right' }}>
 						Cerca:
-						<Input
+						<input
 							placeholder="Cerca"
 							onChange={() =>
 								this.setState({
@@ -162,5 +161,3 @@ class Clients extends Component {
 		);
 	}
 }
-
-export default Clients;

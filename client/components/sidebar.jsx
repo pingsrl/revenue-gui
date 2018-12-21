@@ -1,31 +1,20 @@
-import React from 'react';
-import { Pane, NavGroup, NavTitle, NavGroupItem } from 'react-photonkit';
-import { hashHistory } from 'react-router';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-class Sidebar extends React.Component {
-	onSelect(index) {
-		hashHistory.push(index);
-	}
-
+export default class Sidebar extends Component {
 	render() {
 		return (
-			<Pane ptSize="sm" sidebar>
-				<NavGroup activeKey="/" onSelect={this.onSelect}>
-					<NavGroupItem eventKey="/" text="Dashboard" glyph="home" />
-					<NavGroupItem
-						eventKey="/invoices"
-						text="Fatture"
-						glyph="docs"
-					/>
-					<NavGroupItem
-						eventKey="/clients"
-						text="Clienti"
-						glyph="users"
-					/>
-				</NavGroup>
-			</Pane>
+			<nav-group>
+				<nav-item>
+					<Link to="/">Dashboard</Link>
+				</nav-item>
+				<nav-item>
+					<Link to="/invoices">Fatture</Link>
+				</nav-item>
+				<nav-item>
+					<Link to="/clients">Clienti</Link>
+				</nav-item>
+			</nav-group>
 		);
 	}
 }
-
-export default Sidebar;
