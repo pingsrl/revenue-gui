@@ -10,7 +10,6 @@ class App extends Component {
 	render() {
 		return (
 			<ph-window>
-				<tool-bar>Revenue</tool-bar>
 				<window-content>
 					<div class="pane-group">
 						<div class="pane-sm sidebar">
