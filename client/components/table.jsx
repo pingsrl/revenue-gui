@@ -12,6 +12,7 @@ export default class Table extends Component {
 			search: ''
 		};
 	}
+
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			data: nextProps.data,
@@ -19,9 +20,7 @@ export default class Table extends Component {
 				key: '',
 				direction: 1
 			},
-			search: nextProps.search
-				? nextProps.search.trim().toLowerCase()
-				: ''
+			search: nextProps.search ? nextProps.search.trim().toLowerCase() : ''
 		});
 	}
 
@@ -68,9 +67,7 @@ export default class Table extends Component {
 			order: {
 				key,
 				direction:
-					this.state.order.key === key
-						? this.state.order.direction * -1
-						: 1
+					this.state.order.key === key ? this.state.order.direction * -1 : 1
 			}
 		});
 	}

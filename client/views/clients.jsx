@@ -9,7 +9,7 @@ import numeral from '../lib/numeral.js';
 import Table from '../components/table.jsx';
 import Loader from '../components/loader.jsx';
 
-let transform = el => <span>€ {/*numeral(el).format('€0,0.00')*/} </span>;
+let transform = el => <span>€ {numeral(el)} </span>;
 
 let columns = [
 	{
@@ -85,19 +85,19 @@ export default class Clients extends Component {
 
 	getInvoicesByClient() {
 		let invoices = {};
-		for (let y in this.state.invoices) {
+		Object.keys(this.state.invoices).map(y => {
 			let invoiceByClient = _.groupBy(this.state.invoices[y], el => {
-				return el.client_name;
+				return el.client.name;
 			});
 
-			for (let client in invoiceByClient) {
+			Object.keys(invoiceByClient).map(client => {
 				invoices[client] = invoices[client] || {};
 				invoices[client][y] = invoices[client][y] || [];
 				invoices[client][y] = invoices[client][y].concat(
 					invoiceByClient[client]
 				);
-			}
-		}
+			});
+		});
 		return invoices;
 	}
 
@@ -106,14 +106,15 @@ export default class Clients extends Component {
 			var invoices = this.getInvoicesByClient();
 
 			let data = [];
-			for (let client in invoices) {
+
+			Object.keys(invoices).map(client => {
 				let row = {
 					name: client,
 					total: 0,
 					due: 0
 				};
 
-				for (let y in invoices[client]) {
+				Object.keys(invoices[client]).forEach(y => {
 					row[y] = invoices[client][y]
 						.map(a => a.amount - a.tax_amount)
 						.reduce((a, b) => a + b);
@@ -123,10 +124,10 @@ export default class Clients extends Component {
 						.reduce((a, b) => a + b);
 
 					row.total += row[y];
-				}
+				});
 
 				data.push(row);
-			}
+			});
 
 			data.sort((a, b) => (a.total > b.total ? -1 : 1));
 

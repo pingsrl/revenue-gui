@@ -1,24 +1,11 @@
-import numeral from 'numeral';
+var _ = require('lodash');
 
-numeral.register('locale', 'it', {
-	delimiters: {
-		thousands: '.',
-		decimal: ','
-	},
-	abbreviations: {
-		thousand: 'k',
-		million: 'm',
-		billion: 'b',
-		trillion: 't'
-	},
-	ordinal: function(number) {
-		return number === 1 ? 'mo' : 'mi';
-	},
-	currency: {
-		symbol: '€'
-	}
-});
-
-numeral.locale('it');
-
-export default numeral;
+module.exports = function formatNumber(num = 0) {
+	return _.padStart(
+		num.toLocaleString(undefined, {
+			maximumFractionDigits: 2,
+			minimumFractionDigits: 2
+		}),
+		9
+	);
+};

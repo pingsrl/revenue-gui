@@ -22,9 +22,7 @@ let columns = [
 				href="#"
 				onClick={e => {
 					e.preventDefault();
-					shell.openExternal(
-						'https://pingsrl.harvestapp.com/invoices/' + el
-					);
+					shell.openExternal('https://pingsrl.harvestapp.com/invoices/' + el);
 				}}
 			>
 				apri
@@ -61,12 +59,12 @@ let columns = [
 	{
 		key: 'amount',
 		label: 'Totale',
-		transform: el => '€ ' + numeral(el).format('€0,0.00')
+		transform: el => '€ ' + numeral(el)
 	},
 	{
 		key: 'tax_amount',
 		label: 'IVA',
-		transform: el => '€ ' + numeral(el).format('€0,0.00')
+		transform: el => '€ ' + numeral(el)
 	},
 	{
 		key: 'subject',
@@ -78,7 +76,7 @@ export default class Invoices extends Component {
 	constructor() {
 		super();
 		this.state = {
-			invoices: InvoicesStore.data,
+			invoices: {},
 			search: ''
 		};
 
@@ -99,19 +97,19 @@ export default class Invoices extends Component {
 
 	render() {
 		if (Object.keys(this.state.invoices).length > 0) {
-			let tables = [];
-			for (let y in this.state.invoices) {
-				tables.push(
+			let tables = Object.keys(this.state.invoices).map(y => {
+				const data = this.state.invoices[y];
+				return (
 					<div key={y}>
 						<h2>{y}</h2>
 						<Table
-							data={this.state.invoices[y]}
+							data={data}
 							columns={columns}
 							search={this.state.search || ''}
 						/>
 					</div>
 				);
-			}
+			});
 			return (
 				<div className="invoices">
 					<div>
@@ -129,16 +127,13 @@ export default class Invoices extends Component {
 						</div>
 						<div className="legend">
 							<div>
-								Pagata{' '}
-								<span className="legend-item legend-green" />
+								Pagata <span className="legend-item legend-green" />
 							</div>
 							<div>
-								Scaduta{' '}
-								<span className="legend-item legend-red" />
+								Scaduta <span className="legend-item legend-red" />
 							</div>
 							<div>
-								Non-Scaduta{' '}
-								<span className="legend-item legend-yellow" />
+								Non-Scaduta <span className="legend-item legend-yellow" />
 							</div>
 						</div>
 						{tables.reverse()}

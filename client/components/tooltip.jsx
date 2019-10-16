@@ -5,7 +5,7 @@ import months from '../lib/months.json';
 export default class Tooltip extends Component {
 	calcPercentage(y1 = 0, y2 = 0) {
 		var perc = ((y2 - y1) / y1) * 100;
-		var str = ''; //numeral(perc).format('0.00');
+		var str = numeral(perc);
 		return (
 			<span className={perc > 0 ? 'positive' : 'negative'}>
 				{perc > 0 ? '+' + str : str}%
@@ -23,21 +23,14 @@ export default class Tooltip extends Component {
 					<p className="label">{months[parseInt(label, 10) - 1]}</p>
 					<p className="label">
 						<span className="name">Fatturato:</span>
-						<span className="number">
-							€ {/*numeral(payload[0].value).format('€0,0.00')*/}
-						</span>
+						<span className="number">€ {numeral(payload[0].value)}</span>
 						<span className="percentage">
-							{this.calcPercentage(
-								payload[2].value,
-								payload[0].value
-							)}
+							{this.calcPercentage(payload[2].value, payload[0].value)}
 						</span>
 					</p>
 					<p className="label">
 						<span className="name">Incassato:</span>
-						<span className="number">
-							€ {/*numeral(payload[1].value).format('€0,0.00')*/}
-						</span>
+						<span className="number">€ {numeral(payload[1].value)}</span>
 						<span className="percentage"> </span>
 					</p>
 				</div>

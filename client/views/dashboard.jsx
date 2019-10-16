@@ -10,8 +10,6 @@ import {
 	Legend,
 	CartesianGrid
 } from 'Recharts';
-
-import numeral from '../lib/numeral.js';
 import months from '../lib/months.json';
 
 import InvoicesStore from '../stores/invoices.js';
@@ -20,6 +18,8 @@ import PaymentsStore from '../stores/payments.js';
 import CustomToolTip from '../components/tooltip.jsx';
 import Table from '../components/table.jsx';
 import Loader from '../components/loader.jsx';
+
+const numeral = require('../lib/numeral.js');
 
 let columns = [
 	{
@@ -30,17 +30,17 @@ let columns = [
 	{
 		key: 'invoiced',
 		label: 'Fatturato',
-		transform: el => '€' // + numeral(el).format('0,0.00')
+		transform: el => '€ ' + numeral(el)
 	},
 	{
 		key: 'paid',
 		label: 'Incassato',
-		transform: el => '€' //+ numeral(el).format('0,0.00')
+		transform: el => '€ ' + numeral(el)
 	},
 	{
 		key: 'vat_paid',
 		label: 'IVA Incassato',
-		transform: (el, month) => '€' //+ numeral(month.paid * 0.22).format('0,0.00')
+		transform: (el, month) => '€ ' + numeral(month.paid * 0.22)
 	}
 ];
 
@@ -84,7 +84,7 @@ export default class Dashboard extends Component {
 		return ((y2 - y1) / y1) * 100;
 	}
 
-	getBarData(year = this.state.year) {
+	getBarData(year) {
 		let data = [];
 		let invoices = this.state.invoices[year];
 		let payments = this.state.payments[year];
@@ -94,11 +94,11 @@ export default class Dashboard extends Component {
 		}
 
 		let invoiceGroups = _.groupBy(invoices, el => {
-			return el.issued_at.slice(5, 7);
+			return el.issue_date.slice(5, 7);
 		});
 
 		let paymentGroups = _.groupBy(payments, el => {
-			return el.paid_at.slice(5, 7);
+			return el.paid_date.slice(5, 7);
 		});
 
 		[
@@ -115,31 +115,25 @@ export default class Dashboard extends Component {
 			'11',
 			'12'
 		].forEach((m, idx) => {
-			// sommo le fatture
-			var invoiced = !invoiceGroups[m]
-				? 0
-				: invoiceGroups[m]
-						.map(a => a.amount - a.tax_amount)
-						.reduce((a, b) => a + b);
-			// sommo i pagamenti
-			var paid = !paymentGroups[m]
-				? 0
-				: paymentGroups[m].map(a => a.amount).reduce((a, b) => a + b);
+			let invoiced = 0;
+			let paid = 0;
 
-			var oldData = this.getBarData(year - 1);
-			var invoiced_last_year = 0;
-			var paid_last_year = 0;
-			if (oldData.length) {
-				invoiced_last_year = oldData[idx].invoiced;
-				paid_last_year = oldData[idx].paid;
+			// sommo le fatture
+			if (invoiceGroups[m]) {
+				invoiced = invoiceGroups[m]
+					.map(a => a.amount - a.tax_amount)
+					.reduce((a, b) => a + b);
+			}
+
+			// sommo i pagamenti
+			if (paymentGroups[m]) {
+				paid = paymentGroups[m].map(a => a.amount).reduce((a, b) => a + b);
 			}
 
 			data.push({
 				label: m,
 				invoiced,
-				paid,
-				invoiced_last_year,
-				paid_last_year
+				paid
 			});
 		});
 
@@ -151,7 +145,19 @@ export default class Dashboard extends Component {
 	}
 
 	render() {
-		var data = this.getBarData();
+		let oldData = this.getBarData(this.state.year - 1);
+		let data = this.getBarData(this.state.year).map((m, i) => {
+			if (oldData[i]) {
+				return {
+					label: m.label,
+					invoiced: m.invoiced,
+					paid: m.paid,
+					invoiced_last_year: oldData[i].invoiced,
+					paid_last_year: oldData[i].paid
+				};
+			}
+			return m;
+		});
 
 		if (
 			Object.keys(this.state.invoices).length > 0 &&
@@ -162,9 +168,7 @@ export default class Dashboard extends Component {
 			var invoiced_last_year = data
 				.filter(el => {
 					if (this.state.year == new Date().getFullYear()) {
-						return (
-							parseInt(el.label, 10) <= new Date().getMonth() + 1
-						);
+						return parseInt(el.label, 10) <= new Date().getMonth() + 1;
 					}
 					return true;
 				})
@@ -176,24 +180,28 @@ export default class Dashboard extends Component {
 			return (
 				<div className="dashboard">
 					<div style={{ textAlign: 'center' }}>
-						<btn-group>
-							{Object.keys(this.state.invoices).map(el => (
-								<button
-									key={el}
-									text={el}
-									className="btn btn-segment"
-									onClick={this.setYear.bind(this, el)}
-								/>
-							))}
+						<btn-group type="absolute">
+							{Object.keys(this.state.invoices).map(el => {
+								let className = 'btn btn-segment';
+								if (this.state.year == parseInt(el, 10)) {
+									className += ' active';
+								}
+								return (
+									<button
+										key={el}
+										className={className}
+										onClick={this.setYear.bind(this, el)}
+									>
+										{el}
+									</button>
+								);
+							})}
 						</btn-group>
 						<h4>
-							Fatturato {this.state.year}: €{' '}
-							{/*numeral(invoiced).format('0,0.00')*/}{' '}
-							<span
-								className={diff > 0 ? 'positive' : 'negative'}
-							>
+							Fatturato {this.state.year}: € {numeral(invoiced)}
+							<span className={diff > 0 ? 'positive' : 'negative'}>
 								{diff > 0 && '+'}
-								{/*numeral(diff).format('0,0.00')*/}%
+								{numeral(diff)}%
 							</span>
 						</h4>
 						<ComposedChart width={1000} height={500} data={data}>
