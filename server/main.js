@@ -10,9 +10,6 @@ function createWindow() {
 	});
 	win.loadFile('static/index.html');
 
-	// Apre il Pannello degli Strumenti di Sviluppo.
-	win.webContents.openDevTools();
-
 	win.on('closed', () => {
 		// Eliminiamo il riferimento dell'oggetto window;  solitamente si tiene traccia delle finestre
 		// in array se l'applicazione supporta più finestre, questo è il momento in cui

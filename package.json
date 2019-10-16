@@ -5,8 +5,12 @@
 	"description": "",
 	"main": "server/main.js",
 	"scripts": {
-		"start": "electron-forge start",
-		"package": "electron-forge package",
+		"dev:sass": "node-sass --watch --recursive --output static --source-map true --source-map-contents static",
+		"dev:start": "electron-forge start",
+		"start": "npm-run-all --parallel dev:*",
+		"package:sass": "node-sass --recursive --output static static",
+		"package:electron": "electron-forge package",
+		"package": "npm-run-all package:*",
 		"make": "electron-forge make"
 	},
 	"author": "",
@@ -43,41 +47,14 @@
 		"eslint": "^6.5.1",
 		"eslint-plugin-react": "^7.16.0",
 		"merge2": "^1.3.0",
+		"node-sass": "^4.12.0",
+		"npm-run-all": "^4.1.5",
 		"optimist": "^0.6.1",
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0",
 		"xo": "^0.25.3"
 	},
 	"config": {
-		"forge": {
-			"make_targets": {
-				"win32": [
-					"squirrel"
-				],
-				"darwin": [
-					"zip"
-				],
-				"linux": [
-					"deb",
-					"rpm"
-				]
-			},
-			"electronPackagerConfig": {
-				"packageManager": "yarn"
-			},
-			"electronWinstallerConfig": {
-				"name": "revenue_gui"
-			},
-			"electronInstallerDebian": {},
-			"electronInstallerRedhat": {},
-			"github_repository": {
-				"owner": "",
-				"name": ""
-			},
-			"windowsStoreConfig": {
-				"packageName": "",
-				"name": "Revenue"
-			}
-		}
+		"forge": "./forge.config.js"
 	}
 }

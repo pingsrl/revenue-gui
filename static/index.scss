@@ -1,9 +1,9 @@
-@green: #8cc759;
-@orange: #f9a74b;
-@red: #ef5d74;
-@purple: #8c6daf;
-@blue: #60beeb;
-@yellow: #fbef5a;
+$green: #8cc759;
+$orange: #f9a74b;
+$red: #ef5d74;
+$purple: #8c6daf;
+$blue: #60beeb;
+$yellow: #fbef5a;
 .table-striped {
 	.table-triangle-up {
 		float: right;
@@ -34,13 +34,13 @@
 			border-radius: 10px;
 		}
 		.legend-green {
-			background-color: @green;
+			background-color: $green;
 		}
 		.legend-yellow {
-			background-color: @yellow;
+			background-color: $yellow;
 		}
 		.legend-red {
-			background-color: @red;
+			background-color: $red;
 		}
 	}
 	.table-striped {
@@ -65,13 +65,13 @@
 				margin-right: auto;
 			}
 			.status-green {
-				background-color: @green;
+				background-color: $green;
 			}
 			.status-yellow {
-				background-color: @yellow;
+				background-color: $yellow;
 			}
 			.status-red {
-				background-color: @red;
+				background-color: $red;
 			}
 		}
 		.tax_amount {
@@ -90,10 +90,10 @@
 		margin-right: auto;
 	}
 	.positive {
-		color: @green;
+		color: $green;
 	}
 	.negative {
-		color: @red;
+		color: $red;
 	}
 	.custom-tooltip {
 		margin: 0;
@@ -154,27 +154,27 @@
 		border: 2px solid white;
 	}
 	.loader--dot:first-child {
-		background-color: @green;
+		background-color: $green;
 		animation-delay: 0.5s;
 	}
 	.loader--dot:nth-child(2) {
-		background-color: @purple;
+		background-color: $purple;
 		animation-delay: 0.4s;
 	}
 	.loader--dot:nth-child(3) {
-		background-color: @red;
+		background-color: $red;
 		animation-delay: 0.3s;
 	}
 	.loader--dot:nth-child(4) {
-		background-color: @orange;
+		background-color: $orange;
 		animation-delay: 0.2s;
 	}
 	.loader--dot:nth-child(5) {
-		background-color: @blue;
+		background-color: $blue;
 		animation-delay: 0.1s;
 	}
 	.loader--dot:nth-child(6) {
-		background-color: @yellow;
+		background-color: $yellow;
 		animation-delay: 0s;
 	}
 	.loader--text {
