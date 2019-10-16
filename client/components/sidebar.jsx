@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
 	render() {
 		return (
 			<nav-group>
-				<nav-item>
-					<Link to="/">Dashboard</Link>
+				<nav-item onClick={() => this.props.history.push('/')}>
+					Dashboard
 				</nav-item>
-				<nav-item>
-					<Link to="/invoices">Fatture</Link>
+				<nav-item onClick={() => this.props.history.push('/invoices')}>
+					Fatture
 				</nav-item>
-				<nav-item>
-					<Link to="/clients">Clienti</Link>
+				<nav-item onClick={() => this.props.history.push('/clients')}>
+					Clienti
 				</nav-item>
 			</nav-group>
 		);
 	}
 }
+
+export default withRouter(Sidebar);

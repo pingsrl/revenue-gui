@@ -30,11 +30,11 @@ let columns = [
 		)
 	},
 	{
-		key: 'issued_at',
+		key: 'issue_date',
 		label: 'Emissione'
 	},
 	{
-		key: 'due_at',
+		key: 'due_date',
 		label: 'Scadenza'
 	},
 	{
@@ -53,8 +53,11 @@ let columns = [
 		}
 	},
 	{
-		key: 'client_name',
-		label: 'Cliente'
+		key: 'client',
+		label: 'Cliente',
+		transform: client => {
+			return client.name;
+		}
 	},
 	{
 		key: 'amount',
@@ -95,21 +98,22 @@ export default class Invoices extends Component {
 		this.setState({ invoices: InvoicesStore.data });
 	}
 
+	drawTableForYear(year) {
+		const data = this.state.invoices[year];
+		return (
+			<div key={year}>
+				<h2>{year}</h2>
+				<Table data={data} columns={columns} search={this.state.search || ''} />
+			</div>
+		);
+	}
+
 	render() {
 		if (Object.keys(this.state.invoices).length > 0) {
-			let tables = Object.keys(this.state.invoices).map(y => {
-				const data = this.state.invoices[y];
-				return (
-					<div key={y}>
-						<h2>{y}</h2>
-						<Table
-							data={data}
-							columns={columns}
-							search={this.state.search || ''}
-						/>
-					</div>
-				);
-			});
+			let tables = [
+				this.drawTableForYear(new Date().getFullYear() - 1),
+				this.drawTableForYear(new Date().getFullYear())
+			];
 			return (
 				<div className="invoices">
 					<div>
