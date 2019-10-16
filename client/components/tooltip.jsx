@@ -23,14 +23,20 @@ export default class Tooltip extends Component {
 					<p className="label">{months[parseInt(label, 10) - 1]}</p>
 					<p className="label">
 						<span className="name">Fatturato:</span>
-						<span className="number">€ {numeral(payload[0].value)}</span>
+						<span className="number">
+							€ {numeral(payload[0].payload.invoiced)}
+						</span>
 						<span className="percentage">
-							{this.calcPercentage(payload[2].value, payload[0].value)}
+							{this.calcPercentage(
+								payload[0].payload.invoiced_last_year_to_date ||
+									payload[0].payload.invoiced_last_year,
+								payload[0].payload.invoiced
+							)}
 						</span>
 					</p>
 					<p className="label">
 						<span className="name">Incassato:</span>
-						<span className="number">€ {numeral(payload[1].value)}</span>
+						<span className="number">€ {numeral(payload[1].payload.paid)}</span>
 						<span className="percentage"> </span>
 					</p>
 				</div>

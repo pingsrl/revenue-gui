@@ -117,6 +117,8 @@ export default class Dashboard extends Component {
 		].forEach((m, idx) => {
 			let invoiced = 0;
 			let paid = 0;
+			let invoiced_to_date = 0;
+			let paid_to_date = 0;
 
 			// sommo le fatture
 			if (invoiceGroups[m]) {
@@ -130,10 +132,26 @@ export default class Dashboard extends Component {
 				paid = paymentGroups[m].map(a => a.amount).reduce((a, b) => a + b);
 			}
 
+			if (year != this.state.year && m == new Date().getMonth() + 1) {
+				const invoices_to_date = invoiceGroups[m].filter(
+					el => el.issue_date.slice(8) <= new Date().getDate()
+				);
+
+				invoiced_to_date = invoices_to_date
+					.map(a => a.amount - a.tax_amount)
+					.reduce((a, b) => a + b, 0);
+
+				paid_to_date = invoices_to_date
+					.map(a => a.amount)
+					.reduce((a, b) => a + b, 0);
+			}
+
 			data.push({
 				label: m,
 				invoiced,
-				paid
+				paid,
+				invoiced_to_date,
+				paid_to_date
 			});
 		});
 
@@ -153,7 +171,9 @@ export default class Dashboard extends Component {
 					invoiced: m.invoiced,
 					paid: m.paid,
 					invoiced_last_year: oldData[i].invoiced,
-					paid_last_year: oldData[i].paid
+					paid_last_year: oldData[i].paid,
+					invoiced_last_year_to_date: oldData[i].invoiced_to_date,
+					paid_last_year_to_date: oldData[i].paid_to_date
 				};
 			}
 			return m;
@@ -172,7 +192,7 @@ export default class Dashboard extends Component {
 					}
 					return true;
 				})
-				.map(a => a.invoiced_last_year)
+				.map(a => a.invoiced_last_year_to_date || a.invoiced_last_year)
 				.reduce((a, b) => a + b);
 
 			var diff = this.calcPercentage(invoiced_last_year, invoiced);
