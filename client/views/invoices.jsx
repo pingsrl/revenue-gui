@@ -111,9 +111,9 @@ export default class Invoices extends Component {
 	render() {
 		if (Object.keys(this.state.invoices).length > 0) {
 			let tables = [
-				this.drawTableForYear(new Date().getFullYear())
+				this.drawTableForYear(new Date().getFullYear()),
 				this.drawTableForYear(new Date().getFullYear() - 1),
-				this.drawTableForYear(new Date().getFullYear() - 2),
+				this.drawTableForYear(new Date().getFullYear() - 2)
 			];
 			return (
 				<div className="invoices">
